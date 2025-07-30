@@ -16,7 +16,7 @@ const Facility = (props) => {
       props.hideLoader()
     })
   }
-
+//fefs
   useEffect(() => {
     fetchData();
   }, [])
