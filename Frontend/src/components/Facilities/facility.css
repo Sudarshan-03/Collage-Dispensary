@@ -8,6 +8,8 @@
 .facility-lists{
     display: flex;
     flex-direction: column;
+
+
 }
 
 .facility-list{
@@ -21,5 +23,5 @@
     font-size: 20px;
 }
 .facility-list-value{
-    font-size: 18px;
+    font-size: 19px;
 }
