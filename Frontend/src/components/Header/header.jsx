@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import './header.css'
-//import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Link, useLocation,useNavigate } from 'react-router-dom';
 import { ToastContainer,toast } from 'react-toastify';
 import axios from 'axios';
@@ -70,9 +70,9 @@ const Header = (props) => {
                     <img className='header-college-details-left-logo' src='https://th.bing.com/th/id/OIP.fUG5VxNo5nc4vIhJrZIBwwAAAA?rs=1&pid=ImgDetMain' alt='colegeLogo' />
                     <div>
                         <div className='header-college-details-name'>राष्ट्रीय प्रौद्योगिकी संस्थान,</div>
-                        <div className='header-college-details-place'>जमशेदपुर</div>
+                        <div className='header-college-details-place'>Allahabad</div>
                         <div className='header-college-details-name'>National Institute of Technology, </div>
-                        <div className='header-college-details-place'>Jamshedpur</div>
+                        <div className='header-college-details-place'>Allahabad</div>
                     </div>
                 </div>
 
@@ -137,3 +137,6 @@ const Header = (props) => {
 }
 
 export default Header
+
+
+

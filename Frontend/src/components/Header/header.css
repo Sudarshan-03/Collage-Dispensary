@@ -67,7 +67,7 @@
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
-    user-select: none;
+    /* user-select: none; */
     padding: 20px;
     color: white;
     border-radius: 5px;
