@@ -247,6 +247,7 @@ exports.registerStudentByStaff = async(req,res)=>{
         })
     }
 }
+ 
 
 exports.addStaffsByAdmin = async(req,res)=>{
     try{
