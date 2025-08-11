@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import './nearByHospital.css'
+//import './nearByHospital.css'
 import TableComp from '../Table/tableComp'
 import axios from 'axios'
 const NearByHospitals = (props) => {

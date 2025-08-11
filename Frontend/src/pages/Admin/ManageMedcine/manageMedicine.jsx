@@ -28,9 +28,15 @@ const ManageMedicine = (props) => {
     }
     const fetchData = async () => {
         props.showLoader();
-        {
-            // Please watch the Video for full code
-        }
+        await axios.get(`http://localhost:4000/api/medicine/search-by-name?name=${medicineSearch}`).then((resp) => {
+            console.log(resp)
+            setData(resp.data.medicines)
+        }).catch(err => {
+            toast.error(err?.response?.data?.error)
+
+        }).finally(() => {
+            props.hideLoader();
+        })
     }
 
     const handleEdit = (item)=>{
@@ -45,9 +51,14 @@ const ManageMedicine = (props) => {
 
     const handleDelete = async(id)=>{
         props.showLoader();
-        {
-            // Please watch the Video for full code
-        }
+        await axios.delete(`http://localhost:4000/api/medicine/delete/${id}`,{withCredentials:true}).then((resp)=>{
+            filterOutMedicine(id)
+        }).catch(err => {
+            toast.error(err?.response?.data?.error)
+
+        }).finally(() => {
+            props.hideLoader();
+        })
     }
 
     useEffect(() => {
@@ -65,15 +76,28 @@ const ManageMedicine = (props) => {
 
             <div className='manageMedicine-card'>
                 <div className='report-form-rows'>
-                {
-                                // Please watch the Video for full code
-                            }
+                    <div className='report-form-header'>
+                        <div className=''>Sr. No.</div>
+                        <div className='col-2-mng'>Medicine Name</div>
+                        <div className='col-2-mng'>Added By</div>
+                        <div className='col-3-mng'>Quantity</div>
+                        <div className=''>Edit</div>
+                        <div className=''>Delete</div>
+                    </div>
 
                     <div className='report-form-row-block'>
                         {
-                            {
-                                // Please watch the Video for full code
-                            }
+                            data.map((item, index) => {
+                                return (<div className='report-form-row' >
+                                    <div className=''>{index + 1}</div>
+                                    <div className='col-2-mng'>{item.name}</div>
+                                    <div className='col-2-mng'>{item?.addedBy?.name}</div>
+
+                                    <div className='col-3-mng'>{item.quantity}</div>
+                                    <div onClick={()=>handleEdit(item)} className=' edit-icon' ><EditIcon /></div>
+                                    <div onClick={()=>handleDelete(item._id)} className='delete-icon'><DeleteIcon /></div>
+                                </div>);
+                            })
                         }
 
                         {

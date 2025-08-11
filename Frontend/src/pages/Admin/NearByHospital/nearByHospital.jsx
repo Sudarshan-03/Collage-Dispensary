@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import './nearByHospitals.css'
 import { Link } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -11,9 +10,9 @@ import { ToastContainer, toast } from 'react-toastify';
 const NearByHospital = (props) => {
     const [modal, setModal] = useState(false)
     const [data, setData] = useState([]);
-    const [clickedItem, setClickedItem] = useState(null)
+    const [clickedItem,setClickedItem] = useState(null)
     const onOFModal = () => {
-        if (modal) {
+        if(modal){
             setClickedItem(null)
         }
         setModal(prev => !prev)
@@ -21,39 +20,51 @@ const NearByHospital = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        {
-            // Please watch the Video for full code
-        }
+        await axios.get('http://localhost:4000/api/hospital/get').then(resp => {
+            setData(resp.data.hospitals)
+            console.log(resp)
+        }).catch(err => {
+            toast.error(err?.response?.data?.error)
+
+        }).finally(() => {
+            props.hideLoader();
+        })
     }
 
     useEffect(() => {
         fetchData()
     }, [])
 
-    const handleEdit = (item) => {
+    const handleEdit=(item)=>{
         setClickedItem(item);
         setModal(true)
     }
 
-    const filterOutData = (id) => {
-        let newArrr = data.filter((item) => item._id !== id);
+    const filterOutData = (id)=>{
+        let newArrr = data.filter((item)=>item._id!==id);
         setData(newArrr)
     }
 
-    const handleDelete = async (id) => {
+    const handleDelete=async(id)=>{
         props.showLoader();
-        {
-            // Please watch the Video for full code
-        }
+        await axios.delete(`http://localhost:4000/api/hospital/delete/${id}`,{withCredentials:true}).then(resp=>{
+            filterOutData(id)
+        }).catch(err => {
+            toast.error(err?.response?.data?.error)
+
+        }).finally(() => {
+            props.hideLoader();
+        })
     }
 
     return (
         <div className='admin-facility'>
             <div className='go-back'><Link to={'/admin/dashboard'}><ArrowBackIcon /> Back To Dashboard</Link></div>
 
-            {
-                // Please watch the Video for full code
-            }
+            <div className='admin-facility-header'>
+                <div>Near By Hospital</div>
+                <div className='add-facility-btn' onClick={onOFModal}>Add </div>
+            </div>
 
             <div className='admin-facility-rows'>
 
@@ -62,9 +73,17 @@ const NearByHospital = (props) => {
                         return (
                             <div className='admin-facility-row' key={item._id}>
 
-                                {
-                                    // Please watch the Video for full code
-                                }
+                                <div className='admin-facility-left'>
+                                    <div className='admin-facility-title'>{item.name}</div>
+                                    <div>Address: {item.address}</div>
+                                    <div>{item.contact}</div>
+                                    <div style={{ marginTop: "10px" }}>Added By : {item?.addedBy?.name}</div>
+                                </div>
+
+                                <div className='admin-facility-btns'>
+                                    <div onClick={()=>(handleEdit(item))}><EditIcon /></div>
+                                    <div onClick={()=>handleDelete(item._id)}><DeleteIcon /></div>
+                                </div>
 
                             </div>
                         );
