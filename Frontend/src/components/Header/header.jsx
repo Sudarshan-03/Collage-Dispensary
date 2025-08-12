@@ -4,6 +4,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Link, useLocation,useNavigate } from 'react-router-dom';
 import { ToastContainer,toast } from 'react-toastify';
 import axios from 'axios';
+import aa from './aa.png';
 const Header = (props) => {
 
     const location = useLocation();
@@ -127,7 +128,8 @@ const Header = (props) => {
 
             {
                 location.pathname==="/" && <div className='header-banner'>
-                <img src={"https://i.ytimg.com/vi/DhPP4F6hix8/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZChOMA8=&rs=AOn4CLAilevkYLpx4CiNCQM28kKKsrH4gg"} className='header-banner-image' />
+               
+                <img src={aa} className='header-banner-image2' />
             </div>
             }
 
