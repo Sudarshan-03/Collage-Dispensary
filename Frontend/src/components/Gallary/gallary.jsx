@@ -10,9 +10,13 @@ const Gallary = (props) => {
 
     const fetchData = async () => {
       props.showLoader()
-      {
-        // Please watch the Video for full code
-      }
+      await axios.get('http://localhost:4000/api/gallary/get').then((response) => {
+        setData(response.data.images)
+      }).catch(err => {
+        console.log(err)
+      }).finally(()=>{
+        props.hideLoader()
+      })
     }
 
     fetchData()
@@ -23,9 +27,9 @@ const Gallary = (props) => {
       {
         data.map((item, index) => {
           return (
-            {
-              // Please watch the Video for full code
-            }
+            <div key={index} className='gallary-home-image-block'>
+              <img src={item.link} className='gallary-home-image' />
+            </div>
           );
         })
       }

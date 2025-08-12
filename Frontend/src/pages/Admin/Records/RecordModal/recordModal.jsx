@@ -6,9 +6,11 @@ const RecordModal = (props) => {
         <div className='record-modal'>
 
 
-            {
-                // Please watch the Video for full code
-            }
+            <div className='student-modal-report'>
+                <div>{props.selectedHistory?.student?.name}</div>
+                <div>{props.selectedHistory?.student?.email}</div>
+                <div>{props.selectedHistory?.roll}</div>
+            </div>
 
             <div className='student-details-scroll'>
                 <div className='student-modal-detail'>
@@ -24,9 +26,14 @@ const RecordModal = (props) => {
 
                         <div className='student-modal-body-item'>
                             {
-                                {
-                                    // Please watch the Video for full code
-                                }
+                                props.selectedHistory?.medicines.map((item, index) => {
+                                    return (
+                                        <div className='student-item-modal'>
+                                            <div>{item?.name}</div>
+                                            <div>{item.requiredQuantity}</div>
+                                        </div>
+                                    );
+                                })
                             }
 
                         </div>

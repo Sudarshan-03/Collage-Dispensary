@@ -28,7 +28,14 @@ const StudentAllFiles = (props) => {
 
                                     <div className='student-modal-body-item'>
                                         {
-                                            // Please watch the Video for full code
+                                            item.medicines.map((item, index) => {
+                                                return (
+                                                    <div className='student-item-modal'>
+                                                        <div>{item?.name}</div>
+                                                        <div>{item.requiredQuantity}</div>
+                                                    </div>
+                                                );
+                                            })
                                         }
 
                                     </div>

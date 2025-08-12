@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './nearByHospitals.css'
 import { Link } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';

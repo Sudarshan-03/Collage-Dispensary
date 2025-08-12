@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 const StudentDashboard = (props) => {
     let userInfo = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
     const [history, setHistory] = useState([]);
-    const [selectedHistory, setSelectedHistory] = useState(null)
+    const [selectedHistory,setSelectedHistory] = useState(null)
 
     const [modal, setModal] = useState(false);
 
@@ -30,15 +30,15 @@ const StudentDashboard = (props) => {
 
     const handleOnOfModal = (item) => {
         setModal(prev => !prev)
-        setSelectedHistory(item ? item : null)
+        setSelectedHistory(item?item:null)
     }
 
     return (
         <div className='student-dashboard'>
             <div className='student-info'>
-                {
-                    // Please watch the Video for full code
-                }
+                <div className='welcone-user'>Welcome, <span>{userInfo?.name}</span></div>
+                <div className='welcone-user'>{userInfo?.roll}</div>
+                <div className='welcone-user'>{userInfo?.email}</div>
 
             </div>
 
@@ -53,9 +53,10 @@ const StudentDashboard = (props) => {
                     {
                         history.map((item, index) => {
                             return (
-                                {
-                                    // Please watch the Video for full code
-                                }
+                                <div className='student-row-item' key={index}>
+                                    <div onClick={() => handleOnOfModal(item)}><RemoveRedEyeIcon sx={{ cursor: "pointer" }} /></div>
+                                    <div>{item.createdAt.slice(0,10).split("-").reverse().join("-")}</div>
+                                </div>
                             );
                         })
                     }

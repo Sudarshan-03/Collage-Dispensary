@@ -22,9 +22,14 @@ const Facility = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        {
-            // Please watch the Video for full code
-        }
+        await axios.get('http://localhost:4000/api/facility/get').then((resp) => {
+            setData(resp.data.facility)
+        }).catch(err => {
+            toast.error(err?.response?.data?.error)
+
+        }).finally(() => {
+            props.hideLoader();
+        })
     }
 
     useEffect(() => {
@@ -43,9 +48,14 @@ const Facility = (props) => {
     }
     const handlDelete = async(id)=>{
         props.showLoader()
-        {
-            // Please watch the Video for full code
-        }
+        await axios.delete(`http://localhost:4000/api/facility/delete/${id}`,{withCredentials:true}).then((resp)=>{
+            filterOutData(id)
+        }).catch(err => {
+            toast.error(err?.response?.data?.error)
+
+        }).finally(() => {
+            props.hideLoader();
+        })
     }
     return (
         <div className='admin-facility'>
@@ -61,9 +71,20 @@ const Facility = (props) => {
                 {
                     data.map((item) => {
                         return (
-                            {
-                                // Please watch the Video for full code
-                            }
+                            <div className='admin-facility-row'>
+
+                                <div className='admin-facility-left'>
+                                    <div className='admin-facility-title'>{item.title}</div>
+                                    <div>{item.description}</div>
+                                    <div style={{ marginTop: "10px" }}>Added By : {item?.addedBy?.name}</div>
+                                </div>
+
+                                <div className='admin-facility-btns'>
+                                    <div onClick={()=>handleEdit(item)}><EditIcon /></div>
+                                    <div onClick={()=>handlDelete(item._id)}><DeleteIcon /></div>
+                                </div>
+
+                            </div>
                         );
                     })
                 }

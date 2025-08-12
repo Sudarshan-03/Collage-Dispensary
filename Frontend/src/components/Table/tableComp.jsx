@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -51,9 +50,15 @@ const TableComp = (props) => {
           {
             props.data.map((item, index) => {
               return (
-                {
-                  // Please watch the Video for full code
-                }
+                <StyledTableRow key={index}>
+                  {
+                    Object.keys(item).map((itm, ind) => {
+                      return (
+                        <StyledTableCell key={ind}>{item[itm]}</StyledTableCell>
+                      );
+                    })
+                  }
+                </StyledTableRow>
               );
             })
           }

@@ -1,4 +1,3 @@
-
 import React,{useState} from 'react'
 import './registerStudent.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -33,27 +32,49 @@ const RegisterStudent = (props) => {
     const handleSearch = async()=>{
         if (searchStudent.trim().length === 0) return toast.error("Please enter correct roll number.");
         props.showLoader();
-        {
-            // Please watch the Video for full code
-        }
+        await axios.get(`http://localhost:4000/api/auth/get-student-by-roll/${searchStudent}`,{withCredentials:true}).then(resp=>{
+            console.log(resp)
+            // toast.success(resp.data.message);
+            setStudentDetail({...studentDetail,...resp.data.student})
+        }).catch(err => {
+            setStudentDetail({ _id: "",email:"", name: "", roll: "", mobileNo: "", fatherName: "", fatherMobile: "", address: "", previous_health: "", age: "", bloodGroup: "" })
+            toast.error(err?.response?.data?.error);
+
+        }).finally(() => {
+            props.hideLoader()
+        })
     }
 
     const handleUpdateFunc = async()=>{
         if(studentDetail.name.trim().length===0 || studentDetail.email.trim().length===0 || studentDetail.roll.trim().length===0 || studentDetail.mobileNo.trim().length===0) return toast.error("Name, Mobile No and Roll cant be empty");
         props.showLoader();
         const {_id,updatedAt,...student} = {...studentDetail};
-        {
-            // Please watch the Video for full code
-        }
+        await axios.put(`http://localhost:4000/api/auth/update-student/${_id}`,student,{withCredentials:true}).then(resp=>{
+            console.log(resp)
+            toast.success(resp.data.message);
+        }).catch(err => {
+            toast.error(err?.response?.data?.error);
+            console.log(err)
+
+        }).finally(() => {
+            props.hideLoader()
+        })
 
     }
 
     const registerStudent = async()=>{
         if(studentDetail.name.trim().length===0 || studentDetail.email.trim().length===0 || studentDetail.roll.trim().length===0 || studentDetail.mobileNo.trim().length===0) return toast.error("Name, Mobile No, Email and Roll cant be empty");
         props.showLoader();
-        {
-            // Please watch the Video for full code
-        }
+        await axios.post('http://localhost:4000/api/auth/registerStudentByStaff',studentDetail,{withCredentials:true}).then(response=>{
+            toast.success(response.data.message);
+        }).catch(err => {
+            console.log(err)
+            setStudentDetail({ _id: "",email:"", name: "", roll: "", mobileNo: "", fatherName: "", fatherMobile: "", address: "", previous_health: "", age: "", bloodGroup: "" })
+            toast.error(err?.response?.data?.error);
+
+        }).finally(() => {
+            props.hideLoader()
+        })
     }
   return (
     <div className='register-student'>
@@ -64,18 +85,36 @@ const RegisterStudent = (props) => {
             <div className='register-form-header'>Register Student</div>
             <form className='register-form' onSubmit={handleSubmit}>
                 <div className='register-form-div'>
-                {
-                                // Please watch the Video for full code
-                            }
+                    <div className='register-input-box'>
+                        <input value={studentDetail.name} onChange={(event)=>handleOnChangeInputField(event,"name")} className='input-box-register' placeholder='Student Name' type='text'/>
+                    </div>
+                    <div className='register-input-box'>
+                        <input disabled={studentDetail?._id} value={studentDetail.email} onChange={(event)=>handleOnChangeInputField(event,"email")} className='input-box-register' placeholder='Email' type='email'/>
+                    </div>
                     <div className='register-input-box'>
                         <input value={studentDetail.roll} onChange={(event)=>handleOnChangeInputField(event,"roll")} className='input-box-register' placeholder='Roll No.' type='text'/>
                     </div>
                     <div className='register-input-box'>
                         <input value={studentDetail.mobileNo} onChange={(event)=>handleOnChangeInputField(event,"mobileNo")} className='input-box-register' placeholder='Mobile No.' type='text'/>
                     </div>
-                    {
-                                // Please watch the Video for full code
-                            }
+                    <div className='register-input-box'>
+                        <input value={studentDetail.fatherName} onChange={(event)=>handleOnChangeInputField(event,"fatherName")} className='input-box-register' placeholder='Fathers Name' type='text'/>
+                    </div>
+                    <div className='register-input-box'>
+                        <input value={studentDetail.fatherMobile} onChange={(event)=>handleOnChangeInputField(event,"fatherMobile")} className='input-box-register' placeholder='Father Mobile No' type='text'/>
+                    </div>
+                    <div className='register-input-box'>
+                        <input value={studentDetail.address} onChange={(event)=>handleOnChangeInputField(event,"address")} className='input-box-register' placeholder='Address' type='text'/>
+                    </div>
+                    <div className='register-input-box'>
+                        <input value={studentDetail.previous_health} onChange={(event)=>handleOnChangeInputField(event,"previous_health")} className='input-box-register' placeholder='Previous health issue' type='text'/>
+                    </div>
+                    <div className='register-input-box'>
+                        <input className='input-box-register' value={studentDetail.age} onChange={(event)=>handleOnChangeInputField(event,"age")} placeholder='Age' type='text'/>
+                    </div>
+                    <div className='register-input-box'>
+                        <input value={studentDetail.bloodGroup} onChange={(event)=>handleOnChangeInputField(event,"bloodGroup")} className='input-box-register' placeholder='Blood Group' type='text'/>
+                    </div>
                 </div>
 
 

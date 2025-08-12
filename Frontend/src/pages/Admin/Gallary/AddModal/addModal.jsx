@@ -12,10 +12,11 @@ const AddModal = (props) => {
     const data = new FormData();
     data.append('file', files[0]);
 
-    data.append('upload_preset', "college_dispensary");
+    data.append('upload_preset', "college-dispensary");
+    const cloudName = "dzsq32ffr"    // your cloud name
     setLoader(true)
     try {
-      const response = await axios.post("https://api.cloudinary.com/v1_1/mashhuudanny/image/upload", data);
+      const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, data);
       const imageUrl = response.data.url;
       setImage(imageUrl)
 
@@ -27,10 +28,10 @@ const AddModal = (props) => {
 
   }
 
-  const handleSubmit = async () => {
-    await axios.post('http://localhost:4000/api/gallary/add', { link: image }, { withCredentials: true }).then(resp => {
+  const handleSubmit = async()=>{
+    await axios.post('http://localhost:4000/api/gallary/add',{link:image},{withCredentials:true}).then(resp=>{
       window.location.reload();
-    }).catch(err => {
+    }).catch(err=>{
       console.log(err)
     })
   }
@@ -39,9 +40,12 @@ const AddModal = (props) => {
     <div className='addModal'>
       <div className='addModal-card'>
         <div>Add Image</div>
-        {
-          // Please watch the Video for full code
-        }
+        <div className='modal-add-btns'>
+          <div className='cancel-modal-btn' onClick={() => props.onClose()}>Cancel</div>
+
+          <label htmlFor="fileInput" className='cancel-modal-btn' >Upload</label>
+          <input id="fileInput" accept="image/*" onChange={(e) => { uploadImage(e) }} className='cancel-file' type='file' />
+        </div>
         {
           loader && <Box sx={{ display: 'flex' }}>
             <CircularProgress />
@@ -49,7 +53,7 @@ const AddModal = (props) => {
         }
 
         {
-          // Please watch the Video for full code
+          image && <img src={image} style={{width:"200px",height:"200px",marginTop:20}} />
         }
 
         {
@@ -64,5 +68,5 @@ const AddModal = (props) => {
 export default AddModal
 
 
-// preset-name = college_dispensary
-// cloudname = mashhuudanny
+// preset-name = college-dispensary
+

@@ -13,14 +13,20 @@ const StudentModal = (props) => {
 
                     <div className='student-modal-body-student'>
                         <div className='student-modal-body-header'>
-                            {
-                                // Please watch the Video for full code
-                            }
+                            <div>Medicine Name</div>
+                            <div>Quantity</div>
                         </div>
 
                         <div className='student-modal-body-item'>
                             {
-                                // Please watch the Video for full code
+                                props.selectedHistory.medicines.map((item, index) => {
+                                    return (
+                                        <div className='student-item-modal'>
+                                            <div>{item.name}</div>
+                                            <div>{item.requiredQuantity}</div>
+                                        </div>
+                                    );
+                                })
                             }
 
                         </div>

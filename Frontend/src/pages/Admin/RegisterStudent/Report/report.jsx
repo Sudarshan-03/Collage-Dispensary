@@ -13,9 +13,14 @@ const Report = (props) => {
         setSearchmedicineName(value)
     }
     const fetchData = async () => {
-        {
-            // Please watch the Video for full code
-        }
+        await axios.get(`http://localhost:4000/api/medicine/search-by-name?name=${searchMedicineName}`).then((resp) => {
+            console.log(resp)
+            setData(resp.data.medicines)
+            setDropDown(true)
+        }).catch(err => {
+            toast.error(err?.response?.data?.error)
+            setDropDown(false)
+        })
     }
 
     useEffect(() => {
@@ -24,9 +29,11 @@ const Report = (props) => {
 
     const addMedicine = (item) => {
         let exist = 0;
-        {
-            // Please watch the Video for full code
-        }
+        selectedMedicine.map((it) => {
+            if (item._id === it._id) {
+                exist = 1
+            }
+        })
         item = { ...item, requiredQuantity: "" }
         if (exist === 0) setSelectedMedicine([...selectedMedicine, item]);
         setSearchmedicineName("")
@@ -35,9 +42,14 @@ const Report = (props) => {
 
     const onChangeHandle = (event, ind) => {
         const arr = selectedMedicine.map((item, index) => {
-            {
-                // Please watch the Video for full code
+            if (index === ind) {
+                if (parseInt(item.quantity) < parseInt(event.target.value)) {
+                    toast.error("You have not that much medicine in the store")
+                    return { ...item }
+                }
+                return { ...item, requiredQuantity: event.target.value }
             }
+            return { ...item }
         })
         setSelectedMedicine(arr)
     }
@@ -59,9 +71,18 @@ const Report = (props) => {
     const handleOnSubmit = async () => {
         if (selectedMedicine.length === 0) return toast.error("Please select any medicine.");
         if (checkInputInValid()) return toast.error("Please enter all the fields.")
-            {
-                // Please watch the Video for full code
-            }
+        await axios.post(`http://localhost:4000/api/history/add`,
+            { roll: props.studentDetail.roll, student: props.studentDetail._id, medicines: selectedMedicine }
+            , { withCredentials: true }).then(response => {
+
+                toast.success(response.data.message)
+                setTimeout(() => {
+                    props.handleCloseModal()
+                }, 1000)
+                
+            }).catch((err) => {
+                toast.error(err?.response?.data?.error)
+            })
     }
     return (
         <div className='report-regieter'>
@@ -69,9 +90,17 @@ const Report = (props) => {
                 <SearchBox value={searchMedicineName} onChange={onChange} placeholder="Search Medicine" />
 
                 {
-                    {
-                        // Please watch the Video for full code
-                    }
+                    dropdown && searchMedicineName.trim().length !== 0 && <div className='report-dropdown'>
+
+                        {
+                            data.map((item) => {
+                                return (
+                                    <div className='report-medicine-drpdown' onClick={() => addMedicine(item)}> {item.name}</div>
+                                );
+                            })
+                        }
+
+                    </div>
                 }
             </div>
 
@@ -87,9 +116,12 @@ const Report = (props) => {
                     {
                         selectedMedicine.map((item, index) => {
                             return (
-                                {
-                                    // Please watch the Video for full code
-                                }
+                                <div className='report-form-row' >
+                                    <div className='col-1-rm'>{item.name}</div>
+                                    <div className='col-2-rm'>{item.quantity}</div>
+                                    <div className='col-3-rm'><input value={selectedMedicine[index].requiredQuantity} onChange={(event) => onChangeHandle(event, index)} type='number' className='input-table' /></div>
+                                    <div className='delete-icon col-4-rm' onClick={() => handleDelete(item._id)} ><DeleteIcon /></div>
+                                </div>
                             );
                         })
                     }

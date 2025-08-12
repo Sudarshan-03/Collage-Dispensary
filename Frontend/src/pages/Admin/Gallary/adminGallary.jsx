@@ -28,9 +28,15 @@ const AdminGallary = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        {
-            // Please watch the Video for full code
-        }
+        await axios.get('http://localhost:4000/api/gallary/get').then(resp => {
+            console.log(resp)
+            setData(resp.data.images)
+        }).catch(err => {
+            toast.error(err?.response?.data?.error)
+
+        }).finally(() => {
+            props.hideLoader();
+        })
     }
 
     useEffect(() => {
@@ -47,9 +53,9 @@ const AdminGallary = (props) => {
                 {
                     data.map((item) => {
                         return (
-                            {
-                                // Please watch the Video for full code
-                            }
+                            <div className='gallary-home-image-block img-admin' onClick={()=>setDeleteModalFunc(item)}>
+                                <img src={item.link} className='gallary-home-image' />
+                            </div>
                         );
                     })
                 }
