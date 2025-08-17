@@ -92,9 +92,7 @@ const Header = (props) => {
                 <Link to={'/'} className={`navbar-links ${location.pathname==="/"?'active-link':null}`}>
                     Home
                 </Link>
-                <div onClick={props.isLogin?handleLogout:handleLogin} className={`navbar-links ${location.pathname==="/login"?'active-link':null}`}>
-                    {props.isLogin?"Logout":"Login"}
-                </div>
+                
                 <Link to={'/stock'} className={`navbar-links ${location.pathname==="/stock"?'active-link':null}`}>
                     Stock View
                 </Link>
@@ -123,6 +121,9 @@ const Header = (props) => {
                     </div>
                     }
                     
+                </div>
+                <div onClick={props.isLogin?handleLogout:handleLogin} className={`navbar-links ${location.pathname==="/login"?'active-link':null}`}>
+                    {props.isLogin?"Logout":"Login"}
                 </div>
             </div>
 
