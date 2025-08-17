@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
 
 
 exports.register = async (req, res) => {
-    console.log("REQ BODY:", req.body);
+   // console.log("REQ BODY:", req.body);
     //res.json({ message: "This is register route, Please use post method to register" })
     try {
         const { name, email, password, roll } = req.body;
@@ -48,30 +48,45 @@ exports.register = async (req, res) => {
     }
 }
 
-exports.login = async(req,res)=>{
-    try{
-        const { email, password } = req.body;
-        const isExist = await UserModels.findOne({ email });
-        
-        if(isExist && await bcryptjs.compare(password,isExist.password)){
-            
-            const token = jwt.sign({ userId: isExist._id }, 'Its_My_Secret_Key');
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const isExist = await UserModels.findOne({ email });
 
-            res.cookie('token',token,cookieOptions)
+    if (isExist && await bcryptjs.compare(password, isExist.password)) {
+      // Generate token
+      const token = jwt.sign(
+        { userId: isExist._id },
+        process.env.JWT_SECRET || "Its_My_Secret_Key",
+        { expiresIn: "1d" }
+      );
 
-            return res.status(200).json({ message: 'Logged in successfully', success: "true", user : isExist ,token });
-        }else{
-            return res.status(400).json({ error: 'Invalid credentials' });
-        }
+      // ✅ Proper cookie options
+      res.cookie("token", token, {
+        httpOnly: true,   // prevents JS access (good for security)
+        secure: false,    // set to true in production with HTTPS
+        sameSite: "lax",  // allows sending cookies from frontend
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+      });
 
-    }catch(err){
-        console.log(err)
-        res.status(500).json({
-            error: "Something Went Wrong",
-            issue: err.message
-        })
+      return res.status(200).json({
+        message: "Logged in successfully",
+        success: true,
+        user: isExist,
+        token
+      });
+    } else {
+      return res.status(400).json({ error: "Invalid credentials" });
     }
-}
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: "Something Went Wrong",
+      issue: err.message
+    });
+  }
+};
 
 
 exports.sendOtp = async(req,res)=>{
@@ -170,25 +185,29 @@ exports.resetPassword=async(req,res)=>{
 }
 
 
-exports.updateStudentById = async(req,res)=>{
-    try{
+exports.updateStudentById = async (req, res) => {
+  try {
+    console.log("REQ BODY:", req.body);
+    console.log("REQ PARAMS:", req.params);
+    console.log("REQ HEADERS:", req.headers);
 
-        const { id } = req.params;
-        const updateStudent = await UserModels.findByIdAndUpdate(id, req.body, { new: true });
+    const { id } = req.params;
+    const updateStudent = await UserModels.findByIdAndUpdate(id, req.body, { new: true });
 
-        if (updateStudent) {
-            return res.status(200).json({ message: "Staff Update Successfully" });
-        }
-        return res.status(400).json({ error: "No Such Student is there" })
-        
-    }catch(err){
-        console.log(err)
-        res.status(500).json({
-            error: "Something Went Wrong",
-            issue: err.message
-        })
+    if (updateStudent) {
+      return res.status(200).json({ message: "Staff Update Successfully" });
     }
-}
+    return res.status(400).json({ error: "No Such Student is there" });
+
+  } catch (err) {
+    console.log("ERR:", err);
+    res.status(500).json({
+      error: "Something Went Wrong",
+      issue: err.message,
+    });
+  }
+};
+
 
 exports.getStudentByRollNo=async(req,res)=>{
     try{
