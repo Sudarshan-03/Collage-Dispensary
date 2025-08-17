@@ -5,6 +5,7 @@ import { Link, useLocation,useNavigate } from 'react-router-dom';
 import { ToastContainer,toast } from 'react-toastify';
 import axios from 'axios';
 import aa from './aa.png';
+import logo from './logo.png';
 const Header = (props) => {
 
     const location = useLocation();
@@ -68,7 +69,7 @@ const Header = (props) => {
         <div className='header'>
             <div className='header-college-details'>
                 <div className='header-college-details-left'>
-                    <img className='header-college-details-left-logo' src='https://th.bing.com/th/id/OIP.fUG5VxNo5nc4vIhJrZIBwwAAAA?rs=1&pid=ImgDetMain' alt='colegeLogo' />
+                    <img className='header-college-details-left-logo' src={logo} alt='colegeLogo' />
                     <div>
                         <div className='header-college-details-name'>राष्ट्रीय प्रौद्योगिकी संस्थान,</div>
                         <div className='header-college-details-place'>Allahabad</div>
@@ -78,13 +79,12 @@ const Header = (props) => {
                 </div>
 
                 <div className='header-college-details-right'>
-                    <div className='header-college-social-media'>
-                        <a target='_blank' href='https://www.youtube.com/@nitjamshedpurofficial'><img src='https://cdn-icons-png.flaticon.com/128/3670/3670147.png' className='header-social-media-image' /></a>
-                        <a target='_blank' href='https://www.facebook.com/NITJamshedpurOfficial/'><img src='https://cdn-icons-png.flaticon.com/128/733/733547.png' className='header-social-media-image' /></a>
-                        <a target='_blank' href='https://x.com/NIT_JAMSHEDPUR'><img src='https://cdn-icons-png.flaticon.com/128/5968/5968830.png' className='header-social-media-image' /></a>
-                        <a target='_blank' href='https://www.instagram.com/nitjamshedpur_official/?source=omni_redirect'><img src='https://th.bing.com/th/id/OIP.0wjhvLpjGf_-r-1lqG3QAQHaHw?rs=1&pid=ImgDetMain' className='header-social-media-image' /></a>
-                    </div>
-                    <input type='text' className='header-input-tags' />
+                    <div className='front-size-header'>
+                    <button onClick={() => props.setFontSize((size) => Math.min(size + 2, 32))}>A+</button>
+                    <button onClick={() => props.setFontSize((size) => Math.max(size - 2, 12))}>A-</button>
+
+                        </div>
+                    <input type='text' className='header-input-tags' /> 
                 </div>
             </div>
 

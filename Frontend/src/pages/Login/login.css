@@ -1,6 +1,7 @@
 .login-page{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding: 100px 160px;
     box-sizing: border-box;
@@ -62,7 +63,8 @@
 .signup-page-card{
     width: 40%;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    padding: 30px;
+    padding: 50px;
+    margin-left: 150px;
     height: fit-content;
     box-sizing: border-box;
     background-color: white;

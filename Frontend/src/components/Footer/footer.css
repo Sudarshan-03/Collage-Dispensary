@@ -1,5 +1,6 @@
 
 .footer{
+   
     width: 100%;
     background-color: rgb(26, 61, 83);
     padding: 30px;
@@ -16,9 +17,12 @@
     align-items: center;
 }
 .footer-logo{
-    width: 110px;
-    height: 100px;
+    width: 120px;
+    height: 150px;
     border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    background: none;
 }
 
 .footer-text-white{
