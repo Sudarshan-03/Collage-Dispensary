@@ -1,7 +1,12 @@
+
 const express = require("express");
 const router = express.Router();
 const UserController = require('../Controllers/user')
 const Authentication = require('../Authentication/auth')
+
+router.get("/check", (req, res) => {
+    res.send("✅ User routes working");
+});
 
 router.post('/register',UserController.register)
 router.post('/login',UserController.login)
@@ -10,7 +15,7 @@ router.post('/verify-otp',UserController.verifyOtp)
 router.post('/reset-password',UserController.resetPassword);
 
 
-router.put('/update-student/:id',Authentication.adminFacultyAuth,UserController.updateStudentById)
+router.put('/update-student/:id',Authentication.adminFacultyAuth, UserController.updateStudentById)
 router.get("/get-student-by-roll/:roll",Authentication.adminFacultyAuth,UserController.getStudentByRollNo)
 router.post("/registerStudentByStaff",Authentication.adminFacultyAuth,UserController.registerStudentByStaff)
 

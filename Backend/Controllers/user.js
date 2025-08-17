@@ -22,6 +22,8 @@ const transporter = nodemailer.createTransport({
 
 
 exports.register = async (req, res) => {
+    console.log("REQ BODY:", req.body);
+    //res.json({ message: "This is register route, Please use post method to register" })
     try {
         const { name, email, password, roll } = req.body;
         const isExist = await UserModels.findOne({ email });
@@ -33,7 +35,7 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcryptjs.hash(password,10);
         
 
-        const user = new UserModels({ name, email, roll, password : hashedPassword });
+        const user = new UserModels({ name, email, roll, password: hashedPassword });
         await user.save();
         res.status(201).json({ message: 'User registered successfully', success: "yes", data: user });
 

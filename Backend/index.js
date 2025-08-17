@@ -6,12 +6,12 @@ const cors = require("cors")
 require('dotenv').config({path:"./.env"})
 
 
-app.use(express.json())
-app.use(cookieparser())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
     credentials:true,
-    origin:"*"
+    origin:"http://localhost:5173"   // or your frontend URL
 }));
 
 require('./connection');
@@ -36,3 +36,6 @@ app.use('/api/history',historyRoutes)
 app.listen(process.env.PORT,()=>{
     console.log("Successfully running on port",process.env.PORT)
 })
+app.get("/", (req, res) => {
+    res.send("Backend is running ✅");
+});
