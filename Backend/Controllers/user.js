@@ -203,7 +203,7 @@ exports.updateStudentById = async (req, res) => {
     console.log("ERR:", err);
     res.status(500).json({
       error: "Something Went Wrong",
-      issue: err.message,
+      issue: err.message
     });
   }
 };

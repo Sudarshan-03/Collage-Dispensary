@@ -16,13 +16,24 @@ const AdminDashboard = (props) => {
     }
   }
 
-  let userInfo =localStorage.getItem("userInfo")? JSON.parse(localStorage.getItem("userInfo")):null;
+  let userInfo = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null;
+
+  // Debug log to check token and role
+  console.log("🔍 AdminDashboard userInfo:", userInfo);
+  const token = localStorage.getItem("token");
+  console.log("🛡️ Token from localStorage:", token);
   return (
     <div className='adminDashboard'>
       <div className='welcome-header'>
         <div className='welcome-admin'>Welcome To Admin Panel</div>
         <div className='welcome-admin-right-side'>
-          {userInfo?.role ==="admin" && <div className='manage-staff-btn' onClick={()=>{openCloseModal("staff")}}>Manage Staffs</div>}
+          {userInfo?.role?.toLowerCase() === "admin" && (
+            <div className='manage-staff-btn' onClick={()=>{openCloseModal("staff")}}>
+              Manage Staffs
+            </div>
+          )}
           <div className='manage-staff-btn' onClick={()=>{openCloseModal("event")}}>Events</div>
         </div>
       </div>
