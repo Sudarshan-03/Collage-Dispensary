@@ -84,7 +84,7 @@ const Header = (props) => {
                     <button onClick={() => props.setFontSize((size) => Math.max(size - 2, 12))}>A-</button>
 
                         </div>
-                    <input type='text' className='header-input-tags' /> 
+                    <input type='text' className='header-input-tags' placeholder='search' /> 
                 </div>
             </div>
 

@@ -9,13 +9,23 @@ const ManageStaff = (props) => {
     const [staffs, setStaffs] = useState([])
     const [clickedStaff, setClickedStaff] = useState(null);
 
+    const getAuthHeaders = () => {
+        const token = localStorage.getItem("token");
+        return {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+            },
+            withCredentials: true
+        };
+    };
+
     const handleOnChange = (event, key) => {
         setInputField({ ...inputField, [key]: event.target.value })
     }
 
     const fetchData = async () => {
         props.showLoader()
-        await axios.get("http://localhost:4000/api/auth/get-staff").then((respnse) => {
+        await axios.get("http://localhost:4000/api/auth/get-staff", getAuthHeaders()).then((respnse) => {
             setStaffs(respnse.data.staffs)
 
         }).catch(err => {
@@ -30,7 +40,7 @@ const ManageStaff = (props) => {
 
     const handleUpdate =async()=>{
         
-        await axios.put(`http://localhost:4000/api/auth/update-staff/${clickedStaff?._id}`,inputField,{withCredentials:true}).then(response=>{
+        await axios.put(`http://localhost:4000/api/auth/update-staff/${clickedStaff?._id}`,inputField,getAuthHeaders()).then(response=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -48,7 +58,7 @@ const ManageStaff = (props) => {
 
         if (inputField.name.trim().length === 0 || inputField.email.trim().length === 0 || inputField.password.trim().length === 0 || inputField.designation.trim().length === 0 || inputField.mobileNo.trim().length === 0) return toast.error("Please fill all the details.");
         props.showLoader()
-        await axios.post('http://localhost:4000/api/auth/add-staff',inputField,{withCredentials:true}).then((resp)=>{
+        await axios.post('http://localhost:4000/api/auth/add-staff',inputField,getAuthHeaders()).then((resp)=>{
             console.log(resp)
             toast.success(resp.data.message);
             setStaffs([inputField, ...staffs])
@@ -73,7 +83,7 @@ const ManageStaff = (props) => {
     }
 
     const handleDelete = async(id)=>{
-        await axios.delete(`http://localhost:4000/api/auth/delete-staff/${id}`,{withCredentials:true}).then((response)=>{
+        await axios.delete(`http://localhost:4000/api/auth/delete-staff/${id}`,getAuthHeaders()).then((response)=>{
             filterOutData(id)
         }).catch(err => {
             

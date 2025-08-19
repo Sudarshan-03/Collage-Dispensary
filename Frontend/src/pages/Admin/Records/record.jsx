@@ -37,9 +37,23 @@ const Record = (props) => {
         setStudentRoll(value)
     }
 
+    // Helper for getting auth headers
+    const getAuthHeaders = () => {
+        const token = localStorage.getItem("token");
+        return {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+            },
+            withCredentials: true
+        };
+    }
+
     const fetchData = async () => {
         props.showLoader()
-        await axios.get(`http://localhost:4000/api/history/get-history?month=${selectedMonth}&year=${selectedYear}`, { withCredentials: true }).then(response => {
+        await axios.get(
+            `http://localhost:4000/api/history/get-history?month=${selectedMonth}&year=${selectedYear}`,
+            getAuthHeaders()
+        ).then(response => {
             console.log(response)
             setData(response.data.history)
         }).catch(err => {
@@ -90,7 +104,10 @@ const Record = (props) => {
     const handleClick = async()=>{
         if(studentRoll.trim().length===0) return toast.error("Please Enter Correct Roll No.");
         props.showLoader()
-        await axios.get(`http://localhost:4000/api/history/get?roll=${studentRoll}`,{withCredentials:true}).then(resp=>{
+        await axios.get(
+            `http://localhost:4000/api/history/get?roll=${studentRoll}`,
+            getAuthHeaders()
+        ).then(resp=>{
             console.log(resp)
             setAllRecordModal(true)
             setSelecetedAllDetaisl(resp.data.history)

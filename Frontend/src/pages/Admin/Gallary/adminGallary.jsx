@@ -12,6 +12,17 @@ const AdminGallary = (props) => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [data, setData] = useState([])
     const [clickedItem,setClickedItem] = useState(null)
+
+    const getAuthHeaders = () => {
+        const token = localStorage.getItem("token");
+        return {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+            },
+            withCredentials: true
+        };
+    };
+
     const setAddModalFunc = () => {
         
         setAddModal(prev => !prev)
@@ -28,7 +39,7 @@ const AdminGallary = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get('http://localhost:4000/api/gallary/get').then(resp => {
+        await axios.get('http://localhost:4000/api/gallary/get', getAuthHeaders()).then(resp => {
             console.log(resp)
             setData(resp.data.images)
         }).catch(err => {

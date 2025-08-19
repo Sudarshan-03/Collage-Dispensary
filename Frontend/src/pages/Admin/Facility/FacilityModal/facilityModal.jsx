@@ -4,6 +4,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 const FacilityModal = (props) => {
 
+    const getAuthHeaders = () => {
+        const token = localStorage.getItem("token");
+        return {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+            },
+            withCredentials: true
+        };
+    };
+
     const [inputField, setInputField] = useState({ title: "", description: "" });
     const handleOnChange = (event, key) => {
         setInputField({ ...inputField, [key]: event.target.value });
@@ -15,7 +25,7 @@ const FacilityModal = (props) => {
         }
     },[])
     const updateFacility = async()=>{
-        await axios.put(`http://localhost:4000/api/facility/update/${props.clickedItem._id}`,inputField,{withCredentials:true}).then((resp)=>{
+        await axios.put(`http://localhost:4000/api/facility/update/${props.clickedItem._id}`,inputField,getAuthHeaders()).then((resp)=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -36,7 +46,7 @@ const FacilityModal = (props) => {
             return;
         }
 
-        await axios.post('http://localhost:4000/api/facility/add', inputField, { withCredentials: true }).then(resp => {
+        await axios.post('http://localhost:4000/api/facility/add', inputField, getAuthHeaders()).then(resp => {
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)

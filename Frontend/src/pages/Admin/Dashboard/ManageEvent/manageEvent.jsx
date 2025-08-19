@@ -5,12 +5,22 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 const ManageEvent = (props) => {
+    const getAuthHeaders = () => {
+        const token = localStorage.getItem("token");
+        return {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+            },
+            withCredentials: true
+        };
+    };
+
     const [title, setTitle] = useState("");
     const [data, setData] = useState([])
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get(`http://localhost:4000/api/notification/get`).then((resp) => {
+        await axios.get(`http://localhost:4000/api/notification/get`, getAuthHeaders()).then((resp) => {
             console.log(resp)
             setData(resp.data.notifications)
         }).catch(err => {
@@ -29,7 +39,7 @@ const ManageEvent = (props) => {
         e.preventDefault();
         if (title.trim().length === 0) return toast.error("Please Enter Title");
         props.showLoader();
-        await axios.post('http://localhost:4000/api/notification/add',{title},{withCredentials:true}).then((resp)=>{
+        await axios.post('http://localhost:4000/api/notification/add',{title}, getAuthHeaders()).then((resp)=>{
             
             setData([resp.data.notification,...data]);
             setTitle("")
@@ -47,7 +57,7 @@ const ManageEvent = (props) => {
 
     const handleDeleteEvent = async(id)=>{
         props.showLoader();
-        await axios.delete(`http://localhost:4000/api/notification/delete/${id}`,{withCredentials:true}).then((resp)=>{
+        await axios.delete(`http://localhost:4000/api/notification/delete/${id}`, getAuthHeaders()).then((resp)=>{
             filterOutEvent(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)

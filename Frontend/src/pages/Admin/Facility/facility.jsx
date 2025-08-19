@@ -13,6 +13,16 @@ const Facility = (props) => {
     const [data, setData] = useState([]);
     const [clickedItem,setClickedItem] = useState(null)
 
+    const getAuthHeaders = () => {
+        const token = localStorage.getItem("token");
+        return {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+            },
+            withCredentials: true
+        };
+    };
+
     const onOFModal = () => {
         if(modal){
             setClickedItem(null)
@@ -22,7 +32,7 @@ const Facility = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get('http://localhost:4000/api/facility/get').then((resp) => {
+        await axios.get('http://localhost:4000/api/facility/get', getAuthHeaders()).then((resp) => {
             setData(resp.data.facility)
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -48,7 +58,7 @@ const Facility = (props) => {
     }
     const handlDelete = async(id)=>{
         props.showLoader()
-        await axios.delete(`http://localhost:4000/api/facility/delete/${id}`,{withCredentials:true}).then((resp)=>{
+        await axios.delete(`http://localhost:4000/api/facility/delete/${id}`, getAuthHeaders()).then((resp)=>{
             filterOutData(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)

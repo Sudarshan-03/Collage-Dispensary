@@ -7,6 +7,16 @@ const AddModal = (props) => {
   const [image, setImage] = useState(null)
   const [loader, setLoader] = useState(false)
 
+  const getAuthHeaders = () => {
+      const token = localStorage.getItem("token");
+      return {
+          headers: {
+              Authorization: token ? `Bearer ${token}` : "",
+          },
+          withCredentials: true
+      };
+  }
+
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
@@ -29,7 +39,7 @@ const AddModal = (props) => {
   }
 
   const handleSubmit = async()=>{
-    await axios.post('http://localhost:4000/api/gallary/add',{link:image},{withCredentials:true}).then(resp=>{
+    await axios.post('http://localhost:4000/api/gallary/add', {link:image}, getAuthHeaders()).then(resp=>{
       window.location.reload();
     }).catch(err=>{
       console.log(err)

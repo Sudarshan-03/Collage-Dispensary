@@ -10,8 +10,8 @@ import Staff from '../../components/Staffs/staff';
 import Facility from '../../components/Facilities/facility';
 import NearByHospitals from '../../components/NearByHospitals/nearByHospitals';
 import Gallary from '../../components/Gallary/gallary';
-//import Contact from '../../components/Contact/contact';
-//import Services from '../../components/Services/services';
+import Contact from '../../components/Contact/contact';
+import Services from '../../components/Services/services';
 import { Link } from 'react-router-dom';
 const Home = (props) => {
     const [page, setPage] = useState("About")
@@ -58,9 +58,9 @@ const Home = (props) => {
             case "Gallary":
                 return <Gallary showLoader={props.showLoader} hideLoader={props.hideLoader} />
             case "Contact":
-                return<Gallary showLoader={props.showLoader} hideLoader={props.hideLoader} />
+                return<Contact showLoader={props.showLoader} hideLoader={props.hideLoader} />
             case "Services":
-                return <Gallary showLoader={props.showLoader} hideLoader={props.hideLoader} />
+                return <Services showLoader={props.showLoader} hideLoader={props.hideLoader} />
 
             default:
                 return null;

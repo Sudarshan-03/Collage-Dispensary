@@ -33,23 +33,43 @@
     font-weight: 600;
     color: rgb(102, 130, 27);
 }
-
-.header-college-social-media{
+.front-size-header{
     display: flex;
-    gap: 20px;
-    justify-content: flex-end;
-    padding: 10px;
+    align-items: center;
+    gap: 40px;
+
+    font-size: 28px;
+}
+.front-size-header button {
+    font-size: 18px;
+    padding: 8px 16px;
+    border: 2px solid #255674;
+    border-radius: 6px;
+    background-color: white;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
 
-.header-social-media-image{
-    width: 25px;
-    height: 25px;
+.front-size-header button:hover {
+    background-color: #255674;
+    color: white;
 }
-
 .header-input-tags{
-    width: 200px;
+    width: 250px;
+    padding: 10px 10px;
+    font-size: 15px;
     outline: none;
     border: 2px solid #255674;
+    border-radius: 6px;
+    margin-top: 20px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.header-input-tags:focus {
+    border-color: #2c98dc;
+    box-shadow: 0px 2px 8px rgba(44,152,220,0.4);
 }
 .navbar{
     width: 100%;
