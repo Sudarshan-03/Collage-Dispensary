@@ -17,7 +17,13 @@ const NearByModal = (props) => {
     },[])
 
     const updateFunc = async()=>{
-        await axios.put(`http://localhost:4000/api/hospital/update/${props.clickedItem._id}`,inputField,{withCredentials:true}).then(resp=>{
+            const token=localStorage.getItem("token");
+
+        await axios.put(`http://localhost:4000/api/hospital/update/${props.clickedItem._id}` ,
+
+            inputField,
+            { headers: { Authorization: `Bearer ${token}` }}, 
+            {withCredentials:true}).then(resp=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -33,7 +39,12 @@ const NearByModal = (props) => {
             updateFunc();
             return;
         }
-        await axios.post('http://localhost:4000/api/hospital/add', inputField, { withCredentials: true }).then(resp => {
+        const token= localStorage.getItem("token");
+        await axios.post('http://localhost:4000/api/hospital/add', inputField,
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            },
+            { withCredentials: true }).then(resp => {
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
