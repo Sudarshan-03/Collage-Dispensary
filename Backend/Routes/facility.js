@@ -4,15 +4,9 @@ const Authentication = require('../Authentication/auth');
 const FacilityController = require('../Controllers/facility');
 
 router.post('/add',Authentication.adminFacultyAuth,FacilityController.addFacility)
-
- 
- 
-// Watch Video For FUll Code
- 
- 
-  
- 
- 
+router.put('/update/:id',Authentication.adminFacultyAuth,FacilityController.updateFacility);
+router.get('/get',FacilityController.getAllFacility);
+router.delete('/delete/:id',Authentication.adminFacultyAuth,FacilityController.deleteFacility)
 
 
 module.exports = router;

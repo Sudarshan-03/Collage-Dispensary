@@ -55,7 +55,8 @@ const UserSchema = new mongoose.Schema({
     },
     resetPasswordExpires:{
         type:Date
-    }
+    },
+   
 },{timestamps:true})
 
 const userModel = mongoose.model("user",UserSchema);
