@@ -10,8 +10,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    credentials:true,
-    origin:"https://collagedispensary-tau.vercel.app/"   // or your frontend URLhttps://collagedispensary-tau.vercel.app/
+  origin: [
+    "http://localhost:3000",
+   "https://collagedispensary-tau.vercel.app"
+  ],
+  credentials: true
 }));
 
 require('./connection');
