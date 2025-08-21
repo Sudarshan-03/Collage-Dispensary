@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
     credentials:true,
-    origin:"https://collagedispensary-tau.vercel.app/3"   // or your frontend URL
+    origin:"https://collagedispensary-tau.vercel.app/"   // or your frontend URLhttps://collagedispensary-tau.vercel.app/
 }));
 
 require('./connection');
