@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: [
     "http://localhost:3000",
-   "https://collagedispensary-tau.vercel.app"
+   "https://dispensary-snowy.vercel.app/"
   ],
   credentials: true
 }));
