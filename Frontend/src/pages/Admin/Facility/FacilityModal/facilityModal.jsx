@@ -25,7 +25,7 @@ const FacilityModal = (props) => {
         }
     },[])
     const updateFacility = async()=>{
-        await axios.put(`http://localhost:4000/api/facility/update/${props.clickedItem._id}`,inputField,getAuthHeaders()).then((resp)=>{
+        await axios.put(`https://backend-ruddy-iota-64.vercel.app/api/facility/update/${props.clickedItem._id}`,inputField,getAuthHeaders()).then((resp)=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -46,7 +46,7 @@ const FacilityModal = (props) => {
             return;
         }
 
-        await axios.post('http://localhost:4000/api/facility/add', inputField, getAuthHeaders()).then(resp => {
+        await axios.post('https://backend-ruddy-iota-64.vercel.app/api/facility/add', inputField, getAuthHeaders()).then(resp => {
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)

@@ -39,7 +39,7 @@ const AddModal = (props) => {
   }
 
   const handleSubmit = async()=>{
-    await axios.post('http://localhost:4000/api/gallary/add', {link:image}, getAuthHeaders()).then(resp=>{
+    await axios.post('https://backend-ruddy-iota-64.vercel.app/api/gallary/add', {link:image}, getAuthHeaders()).then(resp=>{
       window.location.reload();
     }).catch(err=>{
       console.log(err)

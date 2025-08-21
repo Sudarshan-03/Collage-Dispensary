@@ -32,7 +32,7 @@ const Facility = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get('http://localhost:4000/api/facility/get', getAuthHeaders()).then((resp) => {
+        await axios.get('https://backend-ruddy-iota-64.vercel.app/api/facility/get', getAuthHeaders()).then((resp) => {
             setData(resp.data.facility)
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -58,7 +58,7 @@ const Facility = (props) => {
     }
     const handlDelete = async(id)=>{
         props.showLoader()
-        await axios.delete(`http://localhost:4000/api/facility/delete/${id}`, getAuthHeaders()).then((resp)=>{
+        await axios.delete(`https://backend-ruddy-iota-64.vercel.app/api/facility/delete/${id}`, getAuthHeaders()).then((resp)=>{
             filterOutData(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)

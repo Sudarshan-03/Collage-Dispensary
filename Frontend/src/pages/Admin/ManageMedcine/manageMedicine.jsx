@@ -39,7 +39,7 @@ const ManageMedicine = (props) => {
     }
     const fetchData = async () => {
         props.showLoader();
-        await axios.get(`http://localhost:4000/api/medicine/search-by-name?name=${medicineSearch}`, getAuthHeaders()).then((resp) => {
+        await axios.get(`https://backend-ruddy-iota-64.vercel.app/api/medicine/search-by-name?name=${medicineSearch}`, getAuthHeaders()).then((resp) => {
             console.log(resp)
             setData(resp.data.medicines)
         }).catch(err => {
@@ -62,7 +62,7 @@ const ManageMedicine = (props) => {
 
     const handleDelete = async(id)=>{
         props.showLoader();
-        await axios.delete(`http://localhost:4000/api/medicine/delete/${id}`, getAuthHeaders()).then((resp)=>{
+        await axios.delete(`https://backend-ruddy-iota-64.vercel.app/api/medicine/delete/${id}`, getAuthHeaders()).then((resp)=>{
             filterOutMedicine(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)

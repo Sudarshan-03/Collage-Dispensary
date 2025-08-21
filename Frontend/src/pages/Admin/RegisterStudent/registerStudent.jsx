@@ -34,7 +34,7 @@ const RegisterStudent = (props) => {
         if (searchStudent.trim().length === 0) return toast.error("Please enter correct roll number.");
         props.showLoader();
         const token = localStorage.getItem("token");
-        await axios.get(`http://localhost:4000/api/auth/get-student-by-roll/${searchStudent}`, {
+        await axios.get(`https://backend-ruddy-iota-64.vercel.app/api/auth/get-student-by-roll/${searchStudent}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -57,7 +57,7 @@ const RegisterStudent = (props) => {
         props.showLoader();
         const {_id,updatedAt,...student} = {...studentDetail};
         const token = localStorage.getItem("token");
-        await axios.put(`http://localhost:4000/api/auth/update-student/${_id}`, student, {
+        await axios.put(`https://backend-ruddy-iota-64.vercel.app/api/auth/update-student/${_id}`, student, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -79,7 +79,7 @@ const RegisterStudent = (props) => {
         if(studentDetail.name.trim().length===0 || studentDetail.email.trim().length===0 || studentDetail.roll.trim().length===0 || studentDetail.mobileNo.trim().length===0) return toast.error("Name, Mobile No, Email and Roll cant be empty");
         props.showLoader();
         const token = localStorage.getItem("token");
-        await axios.post('http://localhost:4000/api/auth/registerStudentByStaff', studentDetail, {
+        await axios.post('https://backend-ruddy-iota-64.vercel.app/api/auth/registerStudentByStaff', studentDetail, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

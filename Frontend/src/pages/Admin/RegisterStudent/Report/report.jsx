@@ -13,7 +13,7 @@ const Report = (props) => {
         setSearchmedicineName(value)
     }
     const fetchData = async () => {
-        await axios.get(`http://localhost:4000/api/medicine/search-by-name?name=${searchMedicineName}`).then((resp) => {
+        await axios.get(`https://backend-ruddy-iota-64.vercel.app/api/medicine/search-by-name?name=${searchMedicineName}`).then((resp) => {
             console.log(resp)
             setData(resp.data.medicines)
             setDropDown(true)
@@ -71,7 +71,7 @@ const Report = (props) => {
     const handleOnSubmit = async () => {
         if (selectedMedicine.length === 0) return toast.error("Please select any medicine.");
         if (checkInputInValid()) return toast.error("Please enter all the fields.")
-        await axios.post(`http://localhost:4000/api/history/add`,
+        await axios.post(`https://backend-ruddy-iota-64.vercel.app/api/history/add`,
             { roll: props.studentDetail.roll, student: props.studentDetail._id, medicines: selectedMedicine }
             , { withCredentials: true }).then(response => {
 

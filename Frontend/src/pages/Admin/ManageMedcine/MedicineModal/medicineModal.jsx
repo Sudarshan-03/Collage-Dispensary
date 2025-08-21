@@ -25,7 +25,7 @@ const MedicineModal = (props) => {
 
     const updateValue = async()=>{
         props.showLoader();
-        await axios.put(`http://localhost:4000/api/medicine/update/${props.clickedMedicine._id}`, medicine, getAuthHeaders()).then((resp)=>{
+        await axios.put(`https://backend-ruddy-iota-64.vercel.app/api/medicine/update/${props.clickedMedicine._id}`, medicine, getAuthHeaders()).then((resp)=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -47,7 +47,7 @@ const MedicineModal = (props) => {
             return toast.error("Please enter all fields")
         }
         props.showLoader()
-        await axios.post('http://localhost:4000/api/medicine/add', medicine, getAuthHeaders()).then((resp) => {
+        await axios.post('https://backend-ruddy-iota-64.vercel.app/api/medicine/add', medicine, getAuthHeaders()).then((resp) => {
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)

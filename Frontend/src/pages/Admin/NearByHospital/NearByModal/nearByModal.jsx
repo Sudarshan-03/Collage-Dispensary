@@ -19,7 +19,7 @@ const NearByModal = (props) => {
     const updateFunc = async()=>{
             const token=localStorage.getItem("token");
 
-        await axios.put(`http://localhost:4000/api/hospital/update/${props.clickedItem._id}` ,
+        await axios.put(`https://backend-ruddy-iota-64.vercel.app/api/hospital/update/${props.clickedItem._id}` ,
 
             inputField,
             { headers: { Authorization: `Bearer ${token}` }}, 
@@ -40,7 +40,7 @@ const NearByModal = (props) => {
             return;
         }
         const token= localStorage.getItem("token");
-        await axios.post('http://localhost:4000/api/hospital/add', inputField,
+        await axios.post('https://backend-ruddy-iota-64.vercel.app/api/hospital/add', inputField,
             {
                 headers: { Authorization: `Bearer ${token}` },
             },

@@ -20,7 +20,7 @@ const ManageEvent = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get(`http://localhost:4000/api/notification/get`, getAuthHeaders()).then((resp) => {
+        await axios.get(`https://backend-ruddy-iota-64.vercel.app/api/notification/get`, getAuthHeaders()).then((resp) => {
             console.log(resp)
             setData(resp.data.notifications)
         }).catch(err => {
@@ -39,7 +39,7 @@ const ManageEvent = (props) => {
         e.preventDefault();
         if (title.trim().length === 0) return toast.error("Please Enter Title");
         props.showLoader();
-        await axios.post('http://localhost:4000/api/notification/add',{title}, getAuthHeaders()).then((resp)=>{
+        await axios.post('https://backend-ruddy-iota-64.vercel.app/api/notification/add',{title}, getAuthHeaders()).then((resp)=>{
             
             setData([resp.data.notification,...data]);
             setTitle("")
@@ -57,7 +57,7 @@ const ManageEvent = (props) => {
 
     const handleDeleteEvent = async(id)=>{
         props.showLoader();
-        await axios.delete(`http://localhost:4000/api/notification/delete/${id}`, getAuthHeaders()).then((resp)=>{
+        await axios.delete(`https://backend-ruddy-iota-64.vercel.app/api/notification/delete/${id}`, getAuthHeaders()).then((resp)=>{
             filterOutEvent(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)

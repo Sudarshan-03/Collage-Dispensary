@@ -16,7 +16,7 @@ const Staff = (props) => {
 
   const fetchData = async()=>{
     props.showLoader();
-    await axios.get("http://localhost:4000/api/auth/get-staff").then((respnse)=>{
+    await axios.get("https://backend-ruddy-iota-64.vercel.app/api/auth/get-staff").then((respnse)=>{
      
       getFormattedData(respnse.data.staffs)
     }).catch(err=>{
