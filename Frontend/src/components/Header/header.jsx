@@ -7,6 +7,7 @@ import axios from 'axios';
 import aa from './aa.png';
 import logo from './logo.png';
 import { backendUrl } from '../../config';
+
 const Header = (props) => {
 
     const location = useLocation();
@@ -81,11 +82,11 @@ const Header = (props) => {
 
                 <div className='header-college-details-right'>
                     <div className='front-size-header'>
-                    <button onClick={() => props.setFontSize((size) => Math.min(size + 2, 32))}>A+</button>
-                    <button onClick={() => props.setFontSize((size) => Math.max(size - 2, 12))}>A-</button>
+                    <button >A+</button>
+                    <button >A-</button>
 
                         </div>
-                    <input type='text' className='header-input-tags' placeholder='search' /> 
+                   
                 </div>
             </div>
 

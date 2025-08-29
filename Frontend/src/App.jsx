@@ -20,6 +20,7 @@ function App() {
 
   const [loader,setLoader] = useState(false);
   const [isLogin,setIsLogin] = useState(localStorage.getItem("isLogin"));
+  const [fontSize, setFontSize] = useState(16);
   let role =localStorage.getItem("userInfo")? JSON.parse(localStorage.getItem("userInfo")).role:null;
   let id =localStorage.getItem("userInfo")? JSON.parse(localStorage.getItem("userInfo"))._id:null;
 
@@ -35,8 +36,8 @@ function App() {
   }
 
   return (
-    <div className='App'>
-      <Header isLogin={isLogin} showLoader={showLoader} handleLogin={handleLogin} hideLoader={hideLoader} />
+    <div className='App' style={{fontSize: `${fontSize}px`}}>
+      <Header isLogin={isLogin} setFontSize={setFontSize} showLoader={showLoader} handleLogin={handleLogin} hideLoader={hideLoader} />
       <Routes>
         <Route path='/' element={<Home showLoader={showLoader} hideLoader={hideLoader} />} />
         <Route path='/login' element={isLogin?role==="student"?<Navigate to={`/student/${id}`} />:<Navigate to={'/admin/dashboard'} /> : <Login handleLogin={handleLogin} showLoader={showLoader} hideLoader={hideLoader}/>} />

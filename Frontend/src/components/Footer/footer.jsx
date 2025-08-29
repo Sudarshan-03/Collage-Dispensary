@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import './footer.css'
 import PhoneIcon from '@mui/icons-material/Phone';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -6,7 +6,18 @@ import CloudIcon from '@mui/icons-material/Cloud';
 import aa from './logo.png';
 const Footer = () => {
 
-    const todayDate = new Date()
+    const [todayDate, setTodayDate] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTodayDate(new Date());
+        }, 1000);
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
+
     return (
         <div className='footer'>
             <div className='foooter-left'>
@@ -32,6 +43,7 @@ const Footer = () => {
             <div className='footer-right'>
                 <div className='footer-right-name'><CloudIcon/>MNNIT</div>
                 <div className='today-date-footer'>{todayDate.toDateString()}</div>
+                <div className='today-date-footer'> {todayDate.toLocaleTimeString()}</div>
             </div>
         </div>
     )
