@@ -1,42 +1,35 @@
-import React from 'react'
+import React from 'react';
+import './studentModal.css';
 
-const StudentModal = (props) => {
-    console.log(props)
+const StudentModal = ({ selectedHistory }) => {
+    if (!selectedHistory) {
+        return null;
+    }
+
     return (
         <div className='record-modal'>
-
-            <div className='student-details-scroll'>
-                <div className='student-modal-detail'>
-                    <div className='student-modal-header'>
-                        {props.selectedHistory.createdAt.slice(0, 10).split("-").reverse().join("-")}
-                    </div>
-
-                    <div className='student-modal-body-student'>
-                        <div className='student-modal-body-header'>
-                            <div>Medicine Name</div>
-                            <div>Quantity</div>
-                        </div>
-
-                        <div className='student-modal-body-item'>
-                            {
-                                props.selectedHistory.medicines.map((item, index) => {
-                                    return (
-                                        <div className='student-item-modal'>
-                                            <div>{item.name}</div>
-                                            <div>{item.requiredQuantity}</div>
-                                        </div>
-                                    );
-                                })
-                            }
-
-                        </div>
-                    </div>
+            <div className='modal-header'>
+                <h3>Medical Record Details</h3>
+                <div className='record-date'>
+                    {new Date(selectedHistory.createdAt).toLocaleDateString('en-GB', {
+                        day: '2-digit', month: 'short', year: 'numeric'
+                    })}
                 </div>
-
             </div>
-
+            <div className='modal-body'>
+                <div className='medicines-grid'>
+                    <div className='grid-header'>Medicine Name</div>
+                    <div className='grid-header'>Quantity</div>
+                    {selectedHistory.medicines.map((item, index) => (
+                        <React.Fragment key={index}>
+                            <div className='grid-cell'>{item.name}</div>
+                            <div className='grid-cell'>{item.requiredQuantity}</div>
+                        </React.Fragment>
+                    ))}
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default StudentModal
+export default StudentModal;
