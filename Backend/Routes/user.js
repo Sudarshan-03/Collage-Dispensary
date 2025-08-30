@@ -4,9 +4,6 @@ const router = express.Router();
 const UserController = require('../Controllers/user')
 const Authentication = require('../Authentication/auth')
 
-router.get("/check", (req, res) => {
-    res.send("✅ User routes working");
-});
 
 router.post('/register',UserController.register)
 router.post('/login',UserController.login)
