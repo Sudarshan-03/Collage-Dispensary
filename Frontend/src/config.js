@@ -1,1 +1,1 @@
-export const backendUrl = "http://localhost:4000" || "https://backend-ruddy-iota-64.vercel.app" ;
+export const backendUrl = "https://backend-ruddy-iota-64.vercel.app" ;
