@@ -15,8 +15,13 @@ const StudentDashboard = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-
-        await axios.get(`${backendUrl}/api/history/get?roll=${userInfo?.roll}`, { withCredentials: true }).then(resp => {
+        const token = localStorage.getItem("token");
+        await axios.get(`${backendUrl}/api/history/get?roll=${userInfo?.roll}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then(resp => {
             console.log(resp)
             setHistory(resp.data.history)
         }).catch(err => {

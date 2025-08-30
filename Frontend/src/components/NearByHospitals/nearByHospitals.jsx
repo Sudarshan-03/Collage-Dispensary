@@ -18,7 +18,13 @@ const NearByHospitals = (props) => {
   useEffect(()=>{
     props.showLoader()
     const fetchData = async()=>{
-      await axios.get(`${backendUrl}/api/hospital/get`).then((response)=>{
+      const token = localStorage.getItem("token");
+      await axios.get(`${backendUrl}/api/hospital/get`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true
+      }).then((response)=>{
         getFormattedData(response.data.hospitals)
       }).catch(err => {
         console.log(err)

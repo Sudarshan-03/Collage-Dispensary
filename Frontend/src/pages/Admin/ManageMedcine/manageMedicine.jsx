@@ -17,16 +17,6 @@ const ManageMedicine = (props) => {
 
     const [data, setData] = useState([])
 
-    // Helper to get auth headers
-    const getAuthHeaders = () => {
-        const token = localStorage.getItem("token");
-        return {
-            headers: {
-                Authorization: token ? `Bearer ${token}` : "",
-            },
-            withCredentials: true
-        };
-    };
 
     const onOffmodal = () => {
         if(addModal){
@@ -40,12 +30,17 @@ const ManageMedicine = (props) => {
     }
     const fetchData = async () => {
         props.showLoader();
-        await axios.get(`${backendUrl}/api/medicine/search-by-name?name=${medicineSearch}`, getAuthHeaders()).then((resp) => {
+        const token = localStorage.getItem("token");
+        await axios.get(`${backendUrl}/api/medicine/search-by-name?name=${medicineSearch}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp) => {
             console.log(resp)
             setData(resp.data.medicines)
         }).catch(err => {
             toast.error(err?.response?.data?.error)
-
         }).finally(() => {
             props.hideLoader();
         })
@@ -63,11 +58,16 @@ const ManageMedicine = (props) => {
 
     const handleDelete = async(id)=>{
         props.showLoader();
-        await axios.delete(`${backendUrl}/api/medicine/delete/${id}`, getAuthHeaders()).then((resp)=>{
+        const token = localStorage.getItem("token");
+        await axios.delete(`${backendUrl}/api/medicine/delete/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp)=>{
             filterOutMedicine(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)
-
         }).finally(() => {
             props.hideLoader();
         })

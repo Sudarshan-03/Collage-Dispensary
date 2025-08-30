@@ -20,11 +20,12 @@ const NearByModal = (props) => {
     const updateFunc = async()=>{
             const token=localStorage.getItem("token");
 
-        await axios.put(`${backendUrl}/api/hospital/update/${props.clickedItem._id}` ,
-
+        await axios.put(`${backendUrl}/api/hospital/update/${props.clickedItem._id}`,
             inputField,
-            { headers: { Authorization: `Bearer ${token}` }}, 
-            {withCredentials:true}).then(resp=>{
+            {
+                headers: { Authorization: `Bearer ${token}` },
+                withCredentials: true
+            }).then(resp=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -41,11 +42,10 @@ const NearByModal = (props) => {
             return;
         }
         const token= localStorage.getItem("token");
-        await axios.post(`${backendUrl}/api/hospital/add`, inputField,
-            {
-                headers: { Authorization: `Bearer ${token}` },
-            },
-            { withCredentials: true }).then(resp => {
+        await axios.post(`${backendUrl}/api/hospital/add`, inputField, {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true
+        }).then(resp => {
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)

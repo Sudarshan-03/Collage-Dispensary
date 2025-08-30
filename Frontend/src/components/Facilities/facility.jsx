@@ -8,8 +8,13 @@ const Facility = (props) => {
 
   const fetchData = async () => {
     props.showLoader()
-    await axios.get(`${backendUrl}/api/facility/get`).then((response) => {
-      
+    const token = localStorage.getItem("token");
+    await axios.get(`${backendUrl}/api/facility/get`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true
+    }).then((response) => {
       setData(response.data.facility);
     }).catch(err => {
       console.log(err)

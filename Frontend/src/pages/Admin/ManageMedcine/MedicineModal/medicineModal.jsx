@@ -4,15 +4,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { backendUrl } from '../../../../config';
 
-const getAuthHeaders = () => {
-    const token = localStorage.getItem("token");
-    return {
-        headers: {
-            Authorization: token ? `Bearer ${token}` : "",
-        },
-        withCredentials: true
-    };
-};
 const MedicineModal = (props) => {
     const [medicine, setMedicine] = useState({ name: "", quantity: "", usage: "" });
     const handleOnChange = (event, key) => {
@@ -26,11 +17,16 @@ const MedicineModal = (props) => {
 
     const updateValue = async()=>{
         props.showLoader();
-        await axios.put(`${backendUrl}/api/medicine/update/${props.clickedMedicine._id}`, medicine, getAuthHeaders()).then((resp)=>{
+        const token = localStorage.getItem("token");
+        await axios.put(`${backendUrl}/api/medicine/update/${props.clickedMedicine._id}`, medicine, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp)=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
-
         }).finally(() => {
             props.hideLoader();
         })
@@ -48,11 +44,16 @@ const MedicineModal = (props) => {
             return toast.error("Please enter all fields")
         }
         props.showLoader()
-        await axios.post(`${backendUrl}/api/medicine/add`, medicine, getAuthHeaders()).then((resp) => {
+        const token = localStorage.getItem("token");
+        await axios.post(`${backendUrl}/api/medicine/add`, medicine, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp) => {
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
-
         }).finally(() => {
             props.hideLoader();
         })

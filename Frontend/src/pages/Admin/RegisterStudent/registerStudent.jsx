@@ -37,7 +37,7 @@ const RegisterStudent = (props) => {
         const token = localStorage.getItem("token");
         await axios.get(`${backendUrl}/api/auth/get-student-by-roll/${searchStudent}`, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`
             },
             withCredentials: true
         }).then(resp=>{
@@ -60,7 +60,7 @@ const RegisterStudent = (props) => {
         const token = localStorage.getItem("token");
         await axios.put(`${backendUrl}/api/auth/update-student/${_id}`, student, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`
             },
             withCredentials: true
         }).then(resp=>{
@@ -82,7 +82,7 @@ const RegisterStudent = (props) => {
         const token = localStorage.getItem("token");
         await axios.post(`${backendUrl}/api/auth/registerStudentByStaff`, studentDetail, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`
             },
             withCredentials: true
         }).then(response=>{

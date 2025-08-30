@@ -14,15 +14,6 @@ const Facility = (props) => {
     const [data, setData] = useState([]);
     const [clickedItem,setClickedItem] = useState(null)
 
-    const getAuthHeaders = () => {
-        const token = localStorage.getItem("token");
-        return {
-            headers: {
-                Authorization: token ? `Bearer ${token}` : "",
-            },
-            withCredentials: true
-        };
-    };
 
     const onOFModal = () => {
         if(modal){
@@ -33,7 +24,13 @@ const Facility = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get(`${backendUrl}/api/facility/get`, getAuthHeaders()).then((resp) => {
+        const token = localStorage.getItem("token");
+        await axios.get(`${backendUrl}/api/facility/get`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp) => {
             setData(resp.data.facility)
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -59,7 +56,13 @@ const Facility = (props) => {
     }
     const handlDelete = async(id)=>{
         props.showLoader()
-        await axios.delete(`${backendUrl}/api/facility/delete/${id}`, getAuthHeaders()).then((resp)=>{
+        const token = localStorage.getItem("token");
+        await axios.delete(`${backendUrl}/api/facility/delete/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp)=>{
             filterOutData(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)

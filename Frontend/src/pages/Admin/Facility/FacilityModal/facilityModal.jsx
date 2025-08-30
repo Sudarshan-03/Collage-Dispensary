@@ -5,16 +5,6 @@ import axios from 'axios';
 import { backendUrl } from '../../../../config';
 const FacilityModal = (props) => {
 
-    const getAuthHeaders = () => {
-        const token = localStorage.getItem("token");
-        return {
-            headers: {
-                Authorization: token ? `Bearer ${token}` : "",
-            },
-            withCredentials: true
-        };
-    };
-
     const [inputField, setInputField] = useState({ title: "", description: "" });
     const handleOnChange = (event, key) => {
         setInputField({ ...inputField, [key]: event.target.value });
@@ -26,11 +16,16 @@ const FacilityModal = (props) => {
         }
     },[])
     const updateFacility = async()=>{
-        await axios.put(`${backendUrl}/api/facility/update/${props.clickedItem._id}`,inputField,getAuthHeaders()).then((resp)=>{
+        const token = localStorage.getItem("token");
+        await axios.put(`${backendUrl}/api/facility/update/${props.clickedItem._id}`, inputField, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp)=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
-
         })
     }
 
@@ -47,11 +42,16 @@ const FacilityModal = (props) => {
             return;
         }
 
-        await axios.post(`${backendUrl}/api/facility/add`, inputField, getAuthHeaders()).then(resp => {
+        const token = localStorage.getItem("token");
+        await axios.post(`${backendUrl}/api/facility/add`, inputField, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then(resp => {
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
-
         })
 
     }

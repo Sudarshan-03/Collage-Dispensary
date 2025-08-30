@@ -24,27 +24,19 @@ const Record = (props) => {
     const [selectedYear, setSelectedYear] = useState("")
     const [selectedMonth, setSelectedMonth] = useState("")
 
-    // ✅ Correct auth header
-    const getAuthHeaders = () => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-            toast.error("No token found. Please login again.");
-            return {};
-        }
-        return {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        };
-    };
 
     const fetchData = async () => {
         props.showLoader()
         try {
+            const token = localStorage.getItem("token");
             const response = await axios.get(
                 `${backendUrl}/api/history/get-history?month=${selectedMonth}&year=${selectedYear}`,
-                getAuthHeaders()
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true
+                }
             );
             setData(response.data.history || []);
         } catch (err) {
@@ -107,9 +99,15 @@ const Record = (props) => {
         }
         props.showLoader();
         try {
+            const token = localStorage.getItem("token");
             const resp = await axios.get(
                 `${backendUrl}/api/history/get?roll=${studentRoll}`,
-                getAuthHeaders()
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true
+                }
             );
             setAllRecordModal(true);
             setSelecetedAllDetaisl(resp.data.history || []);

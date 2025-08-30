@@ -14,7 +14,13 @@ const Report = (props) => {
         setSearchmedicineName(value)
     }
     const fetchData = async () => {
-        await axios.get(`${backendUrl}/api/medicine/search-by-name?name=${searchMedicineName}`).then((resp) => {
+        const token = localStorage.getItem("token");
+        await axios.get(`${backendUrl}/api/medicine/search-by-name?name=${searchMedicineName}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp) => {
             console.log(resp)
             setData(resp.data.medicines)
             setDropDown(true)
@@ -72,9 +78,15 @@ const Report = (props) => {
     const handleOnSubmit = async () => {
         if (selectedMedicine.length === 0) return toast.error("Please select any medicine.");
         if (checkInputInValid()) return toast.error("Please enter all the fields.")
+        const token = localStorage.getItem("token");
         await axios.post(`${backendUrl}/api/history/add`,
-            { roll: props.studentDetail.roll, student: props.studentDetail._id, medicines: selectedMedicine }
-            , { withCredentials: true }).then(response => {
+            { roll: props.studentDetail.roll, student: props.studentDetail._id, medicines: selectedMedicine },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            }).then(response => {
 
                 toast.success(response.data.message)
                 setTimeout(() => {

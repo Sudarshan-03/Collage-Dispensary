@@ -4,11 +4,20 @@ import axios from 'axios';
 import { backendUrl } from '../../../../config';
 const DeleteModal = (props) => {
 
-  const handleDelete=async()=>{
-    if(props.clickedItem){
-      await axios.delete(`${backendUrl}/api/gallary/delete/${props.clickedItem._id}`,{withCredentials:true}).then(resp=>{
+  const handleDelete = async () => {
+    if (props.clickedItem) {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `${backendUrl}/api/gallary/delete/${props.clickedItem._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true
+        }
+      ).then(resp => {
         window.location.reload();
-      }).catch(err=>{
+      }).catch(err => {
         alert('Something Went Wrong')
         console.log(err)
       })

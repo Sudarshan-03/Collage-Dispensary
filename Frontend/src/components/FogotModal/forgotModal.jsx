@@ -16,14 +16,19 @@ const ForgotModal = (props) => {
     const sendOTPToMail = async()=>{
         if (inputField.email.trim().length === 0) return toast.error("Please Enter Email")
         props.showLoader()
-        await axios.post(`${backendUrl}/api/auth/send-otp`,{email:inputField.email}).then((response)=>{
+        const token = localStorage.getItem("token");
+        await axios.post(`${backendUrl}/api/auth/send-otp`, { email: inputField.email }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((response) => {
             console.log(response)
             setStep(2);
             setButtonText("Enter the OTP")
             alert(response.data.message)
         }).catch(err => {
             alert(err?.response?.data?.error)
-
         }).finally(() => {
             props.hideLoader();
         })
@@ -33,34 +38,40 @@ const ForgotModal = (props) => {
     const checkOtp = async()=>{
         if (inputField.otp.trim().length === 0) return toast.error("Please Enter OTP")
         props.showLoader()
-
-        await axios.post(`${backendUrl}/api/auth/verify-otp`,{email:inputField.email,otp:inputField.otp}).then((response)=>{
+        const token = localStorage.getItem("token");
+        await axios.post(`${backendUrl}/api/auth/verify-otp`, { email: inputField.email, otp: inputField.otp }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((response) => {
             setStep(3);
             setButtonText("Update New Password")
             alert(response.data.message)
         }).catch(err => {
             alert(err?.response?.data?.error)
-
         }).finally(() => {
             props.hideLoader();
-            
         })
     }
 
     const resetPassword = async()=>{
         if (inputField.newPassword.trim().length === 0) return toast.error("Please Enter new password")
         props.showLoader()
-        
-        await axios.post(`${backendUrl}/api/auth/reset-password`,{email:inputField.email,newPassword:inputField.newPassword}).then((response)=>{
+        const token = localStorage.getItem("token");
+        await axios.post(`${backendUrl}/api/auth/reset-password`, { email: inputField.email, newPassword: inputField.newPassword }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((response) => {
             alert(response.data.message)
             props.closeModal()
         }).catch(err => {
             console.log(err)
             alert(err?.response?.data?.error)
-
         }).finally(() => {
             props.hideLoader();
-            
         })
     }
 

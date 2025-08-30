@@ -10,23 +10,19 @@ const ManageStaff = (props) => {
     const [staffs, setStaffs] = useState([])
     const [clickedStaff, setClickedStaff] = useState(null);
 
-    const getAuthHeaders = () => {
-        const token = localStorage.getItem("token");
-        return {
-            headers: {
-                Authorization: token ? `Bearer ${token}` : "",
-            },
-            withCredentials: true
-        };
-    };
-
     const handleOnChange = (event, key) => {
         setInputField({ ...inputField, [key]: event.target.value })
     }
 
     const fetchData = async () => {
         props.showLoader()
-        await axios.get(`${backendUrl}/api/auth/get-staff`, getAuthHeaders()).then((respnse) => {
+        const token = localStorage.getItem("token");
+        await axios.get(`${backendUrl}/api/auth/get-staff`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((respnse) => {
             setStaffs(respnse.data.staffs)
 
         }).catch(err => {
@@ -40,8 +36,13 @@ const ManageStaff = (props) => {
     }, [])
 
     const handleUpdate =async()=>{
-        
-        await axios.put(`${backendUrl}/api/auth/update-staff/${clickedStaff?._id}`,inputField,getAuthHeaders()).then(response=>{
+        const token = localStorage.getItem("token");
+        await axios.put(`${backendUrl}/api/auth/update-staff/${clickedStaff?._id}`,inputField,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then(response=>{
             window.location.reload();
         }).catch(err => {
             toast.error(err?.response?.data?.error)
@@ -59,7 +60,13 @@ const ManageStaff = (props) => {
 
         if (inputField.name.trim().length === 0 || inputField.email.trim().length === 0 || inputField.password.trim().length === 0 || inputField.designation.trim().length === 0 || inputField.mobileNo.trim().length === 0) return toast.error("Please fill all the details.");
         props.showLoader()
-        await axios.post(`${backendUrl}/api/auth/add-staff`,inputField,getAuthHeaders()).then((resp)=>{
+        const token = localStorage.getItem("token");
+        await axios.post(`${backendUrl}/api/auth/add-staff`,inputField,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp)=>{
             console.log(resp)
             toast.success(resp.data.message);
             setStaffs([inputField, ...staffs])
@@ -84,7 +91,13 @@ const ManageStaff = (props) => {
     }
 
     const handleDelete = async(id)=>{
-        await axios.delete(`${backendUrl}/api/auth/delete-staff/${id}`,getAuthHeaders()).then((response)=>{
+        const token = localStorage.getItem("token");
+        await axios.delete(`${backendUrl}/api/auth/delete-staff/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((response)=>{
             filterOutData(id)
         }).catch(err => {
             

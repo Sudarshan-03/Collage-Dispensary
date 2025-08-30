@@ -54,7 +54,13 @@ const Header = (props) => {
     }
     const handleLogout = async()=>{
         props.showLoader();
-        await axios.post(`${backendUrl}/api/auth/logout`,{},{withCredentials:true}).then(response=>{
+        const token = localStorage.getItem("token");
+        await axios.post(`${backendUrl}/api/auth/logout`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then(response=>{
             console.log(response)
             props.handleLogin(false)
             localStorage.clear();

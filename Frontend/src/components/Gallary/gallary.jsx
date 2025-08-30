@@ -11,7 +11,13 @@ const Gallary = (props) => {
 
     const fetchData = async () => {
       props.showLoader()
-      await axios.get(`${backendUrl}/api/gallary/get`).then((response) => {
+      const token = localStorage.getItem("token");
+      await axios.get(`${backendUrl}/api/gallary/get`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true
+      }).then((response) => {
         setData(response.data.images)
       }).catch(err => {
         console.log(err)

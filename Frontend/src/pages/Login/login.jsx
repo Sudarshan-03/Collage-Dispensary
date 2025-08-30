@@ -30,7 +30,12 @@ const Login = (props) => {
         if (loginField.email.trim() === "" || loginField.password.trim() === "") return toast.error("Please enter the credentials");
         props.showLoader();
 
-        await axios.post(`${backendUrl}/api/auth/login`, loginField, { withCredentials: true }).then((response) => {
+        await axios.post(`${backendUrl}/api/auth/login`, loginField, {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then((response) => {
             console.log(response)
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userInfo', JSON.stringify(response.data.user));

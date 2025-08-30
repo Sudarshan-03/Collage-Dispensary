@@ -23,7 +23,13 @@ const Stock = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get(`${backendUrl}/api/medicine/search-by-name?name=${medicineName}`).then((response) => {
+        const token = localStorage.getItem("token");
+        await axios.get(`${backendUrl}/api/medicine/search-by-name?name=${medicineName}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((response) => {
 
             if (response.data.medicines.length === 0) {
                 setStocks([]);

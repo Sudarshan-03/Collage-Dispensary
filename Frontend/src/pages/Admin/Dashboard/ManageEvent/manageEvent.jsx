@@ -21,7 +21,13 @@ const ManageEvent = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get(`${backendUrl}/api/notification/get`, getAuthHeaders()).then((resp) => {
+        const token = localStorage.getItem("token");
+        await axios.get(`${backendUrl}/api/notification/get`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp) => {
             console.log(resp)
             setData(resp.data.notifications)
         }).catch(err => {
@@ -40,7 +46,13 @@ const ManageEvent = (props) => {
         e.preventDefault();
         if (title.trim().length === 0) return toast.error("Please Enter Title");
         props.showLoader();
-        await axios.post(`${backendUrl}/api/notification/add`,{title}, getAuthHeaders()).then((resp)=>{
+        const token = localStorage.getItem("token");
+        await axios.post(`${backendUrl}/api/notification/add`, {title}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp)=>{
             
             setData([resp.data.notification,...data]);
             setTitle("")
@@ -58,7 +70,13 @@ const ManageEvent = (props) => {
 
     const handleDeleteEvent = async(id)=>{
         props.showLoader();
-        await axios.delete(`${backendUrl}/api/notification/delete/${id}`, getAuthHeaders()).then((resp)=>{
+        const token = localStorage.getItem("token");
+        await axios.delete(`${backendUrl}/api/notification/delete/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then((resp)=>{
             filterOutEvent(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)

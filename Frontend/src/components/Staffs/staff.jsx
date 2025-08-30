@@ -17,7 +17,13 @@ const Staff = (props) => {
 
   const fetchData = async()=>{
     props.showLoader();
-    await axios.get(`${backendUrl}/api/auth/get-staff`).then((respnse)=>{
+    const token = localStorage.getItem("token");
+    await axios.get(`${backendUrl}/api/auth/get-staff`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true
+    }).then((respnse)=>{
      
       getFormattedData(respnse.data.staffs)
     }).catch(err=>{

@@ -22,7 +22,13 @@ const NearByHospital = (props) => {
 
     const fetchData = async () => {
         props.showLoader();
-        await axios.get(`${backendUrl}/api/hospital/get`).then(resp => {
+        const token = localStorage.getItem("token");
+        await axios.get(`${backendUrl}/api/hospital/get`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then(resp => {
             setData(resp.data.hospitals)
             console.log(resp)
         }).catch(err => {
@@ -49,7 +55,13 @@ const NearByHospital = (props) => {
 
     const handleDelete=async(id)=>{
         props.showLoader();
-        await axios.delete(`${backendUrl}/api/hospital/delete/${id}`,{withCredentials:true}).then(resp=>{
+        const token = localStorage.getItem("token");
+        await axios.delete(`${backendUrl}/api/hospital/delete/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true
+        }).then(resp=>{
             filterOutData(id)
         }).catch(err => {
             toast.error(err?.response?.data?.error)
